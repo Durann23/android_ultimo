@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class PermisoAdapter extends RecyclerView.Adapter <PermisoAdapter.ViewHol
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+
                     if(p.getNombre().equals("Llamada")){
 
                         if(ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE)== PackageManager.PERMISSION_DENIED){
@@ -68,6 +70,15 @@ public class PermisoAdapter extends RecyclerView.Adapter <PermisoAdapter.ViewHol
                             context.startActivity(intentcall);
                         }
 
+                    }else{
+                        if(ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)== PackageManager.PERMISSION_DENIED){
+
+                            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CAMERA}, 1988);
+
+                        }else{
+                            Intent intentcall = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            context.startActivity(intentcall);
+                        }
                     }
 
                 } else {
@@ -98,7 +109,7 @@ public class PermisoAdapter extends RecyclerView.Adapter <PermisoAdapter.ViewHol
             super(itemView);
             txtPermiso=itemView.findViewById(R.id.tvPermiso);
             txtDesc=itemView.findViewById(R.id.tvDesc);
-
+            swPermiso = itemView.findViewById(R.id.swPermiso);
         }
 
         public void SetData(Permiso p){

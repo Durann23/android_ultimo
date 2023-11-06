@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 
 import com.example.recycler_permisos2.adapter.PermisoAdapter;
 import com.example.recycler_permisos2.models.Permiso;
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         List<Permiso> ListaPermisos = new ArrayList<>();
         ListaPermisos.add(new Permiso("Camara","a"));
-        ListaPermisos.add(new Permiso("LLamada","a"));
+        ListaPermisos.add(new Permiso("Llamada","a"));
 
 
 
@@ -46,6 +48,16 @@ public class MainActivity extends AppCompatActivity {
                 Intent intentCall = new Intent(Intent.ACTION_CALL, Uri.parse("tel:871-521-5680"));
                 startActivity(intentCall);
             }
+        } else if (requestCode==1988) {
+
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permiso de llamada otorgado, realiza las acciones necesarias
+                Intent intentcall = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivity(intentcall);
+            }
+
         }
     }
+
+
 }
